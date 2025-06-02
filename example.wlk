@@ -17,7 +17,7 @@ object colores{
 }
 
 class Kwid {
-  var adicional = tanque
+  var adicional 
   method capacidad() = adicional.capacidad()
   method ponerTanque() {adicional = tanque}
   method sacarTanque() {adicional = sinAdicional}
@@ -37,8 +37,8 @@ object tanque {
 
 }
 object trafic {
-  var motor = null
-  var interior = null
+  var motor = motorBataton
+  var interior = interiorPopular 
   method motor()=motor
   method motor(nuevo) {motor=nuevo}
   method interior() = interior
@@ -67,7 +67,7 @@ object trafic {
    method velocidadMax() = 80
  }
  
- class AutosEspeciales {
+ class AutoEspecial {
   const color
   const capacidad
   const velocidadMax
@@ -78,10 +78,10 @@ object trafic {
   method velocidadMax() = velocidadMax
  }
  class Dependencia {
-  var rodados =[]
-  var empleados = []
+  var rodados 
+  var empleados 
   method empleados() = empleados
-  method cantidadEmpleados() = empleados.size()
+  method cantidadEmpleados() = empleados
   method agregarAFlota(rodado) {rodados.add(rodado)}
   method quitarDeFlota(rodado) {rodados.remove(rodado)}
   method pesoTotal() = rodados.sum{r=>r.peso()}
@@ -90,7 +90,7 @@ object trafic {
   method capacidadTotalEnColor(color) = rodados.filter({r=>r.color() == color}).sum({r=>r.capacidad()})
   method colorDelRodadoMasRapido() = rodados.max({r=>r.velocidadMax()}).color()
   method capacidadFaltante() = self.cantidadEmpleados() - self.capacidadTotal()
-  method esGrande() = empleados.size() >=40 and rodados.size()>=5
+  method esGrande() = empleados >=40 and rodados.size()>=5
  }
 object azul {
 
@@ -103,5 +103,8 @@ object rojo {
   
 }
 object blanco {
+  
+}
+object beige {
   
 }
