@@ -49,3 +49,22 @@ describe "test etapa 1" {
     assert.equals(5, cultura.capacidadFaltante())
   }
 }
+describe "test etapa 2" {
+  const cachito = new Corsa(color=rojo)
+  var pedido1 = new Pedido(distancia=960, tiempoMaximo=8, pasajeros=4, coloresIncompatibles=#{azul,negro})
+  test "cachito puede satisfacer el pedido1" {
+    assert.that(pedido1.puedeSatisfacerUnPedido(cachito))
+  }
+  test "cachito ya no puede satisfacer el pedido si agregamos el rojo a los colores incompatibles" {
+    pedido1.coloresIncompatibles().add(rojo)
+    assert.notThat(pedido1.puedeSatisfacerUnPedido(cachito))
+  }
+  test "cachito ya no puede satisfacer el pedido si cambiamos la cantidad de pasajeros a 6" {
+    pedido1.pasajeros(6)
+    assert.notThat(pedido1.puedeSatisfacerUnPedido(cachito))
+  }
+  test "cachito ya no puede satisfacer el pedido si cambiamos el tiempo maximo a 6 horas" {
+    pedido1.tiempoMaximo(6)
+    assert.notThat(pedido1.puedeSatisfacerUnPedido(cachito))
+  }
+}

@@ -108,3 +108,21 @@ object blanco {
 object beige {
   
 }
+object negro {
+  
+}
+class Pedido {
+  var property distancia
+  var  property tiempoMaximo
+  var property pasajeros
+  var property coloresIncompatibles
+  
+  method velocidadRequerida() = distancia / tiempoMaximo
+  method puedeSatisfacerUnPedido(auto) {
+    return auto.velocidadMax() >= (self.velocidadRequerida() + 10) and 
+           auto.capacidad() >= pasajeros and 
+           (!coloresIncompatibles.contains(auto.color()))
+  }
+  method acelerar() {tiempoMaximo-=1}
+  method relajar() {tiempoMaximo+=1}
+}
