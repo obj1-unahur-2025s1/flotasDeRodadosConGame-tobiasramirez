@@ -68,3 +68,16 @@ describe "test etapa 2" {
     assert.notThat(pedido1.puedeSatisfacerUnPedido(cachito))
   }
 }
+describe "test etapa 3" {
+  const cachito = new Corsa(color=rojo)
+  const corsaAzul1 = new Corsa(color=azul)
+  const corsaVerde1 = new Corsa(color=verde)
+  const kwidConTanque1 = new Kwid(adicional = tanque)
+  const autoEspecial1 = new AutoEspecial(capacidad = 5, velocidadMax=160, peso = 1200, color = beige)
+  const pedido1 = new Pedido(distancia=960, tiempoMaximo=8, pasajeros=4, coloresIncompatibles=[azul,negro])
+  const pedido2 = new Pedido(distancia=960, tiempoMaximo=8, pasajeros=4, coloresIncompatibles=[beige,negro,azul,rojo])
+  const deportes = new Dependencia(rodados=[cachito, corsaAzul1, corsaVerde1, kwidConTanque1,autoEspecial1], empleados=45, pedidos = [pedido1, pedido2])
+  test "description" {
+    
+  }
+}

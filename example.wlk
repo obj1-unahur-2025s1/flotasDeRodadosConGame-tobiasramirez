@@ -5,6 +5,11 @@ class Corsa {
   method peso() = 1300
   method color() = color
   method color(nuevo) {color = nuevo}
+  method puedeSatisfacer(unPedido) {
+    return self.velocidadMax() >= (unPedido.velocidadRequerida() + 10) and 
+           self.capacidad() >= unPedido.pasajeros() and 
+           (!unPedido.coloresIncompatibles().contains(self.color()))
+  }
   method initialize() {
     if(not colores.validos().contains(color)){
       self.error(color.toString() + " no es un color valido," + " los colores validos son " + colores.validos())
@@ -13,7 +18,7 @@ class Corsa {
   }
 }
 object colores{
-  method validos()= [rojo, blanco,azul,verde]
+  method validos()= [rojo, blanco,azul,verde,beige,negro]
 }
 
 class Kwid {
@@ -24,6 +29,11 @@ class Kwid {
   method velocidadMax() = adicional.velocidadMax()
   method peso() = 1200 + adicional.peso()
   method color() = azul
+  method puedeSatisfacer(unPedido) {
+    return self.velocidadMax() >= (unPedido.velocidadRequerida() + 10) and 
+           self.capacidad() >= unPedido.pasajeros() and 
+           (!unPedido.coloresIncompatibles().contains(self.color()))
+  }
 }
 object sinAdicional {
    method peso() = 0
@@ -47,6 +57,11 @@ object trafic {
   method velocidadMax()= motor.velocidadMax()
   method capacidad() = interior.capacidad()
   method color() = blanco
+  method puedeSatisfacer(unPedido) {
+    return self.velocidadMax() >= (unPedido.velocidadRequerida() + 10) and 
+           self.capacidad() >= unPedido.pasajeros() and 
+           (!unPedido.coloresIncompatibles().contains(self.color()))
+  }
  }
  object interiorComodo {
    method capacidad() = 5
@@ -76,10 +91,18 @@ object trafic {
   method peso() = peso
   method capacidad() = capacidad
   method velocidadMax() = velocidadMax
+  method puedeSatisfacer(unPedido) {
+    return self.velocidadMax() >= (unPedido.velocidadRequerida() + 10) and 
+           self.capacidad() >= unPedido.pasajeros() and 
+           (!unPedido.coloresIncompatibles().contains(self.color()))
+  }
  }
  class Dependencia {
+  var property pedidos = []
   var rodados 
   var empleados 
+  var coloresIncompatibles = #{}
+  
   method empleados() = empleados
   method cantidadEmpleados() = empleados
   method agregarAFlota(rodado) {rodados.add(rodado)}
@@ -91,6 +114,18 @@ object trafic {
   method colorDelRodadoMasRapido() = rodados.max({r=>r.velocidadMax()}).color()
   method capacidadFaltante() = self.cantidadEmpleados() - self.capacidadTotal()
   method esGrande() = empleados >=40 and rodados.size()>=5
+  method totalPasajerosEnPedidos() = pedidos.sum({p=>p.pasajeros()})
+  method losQueNoPuedenSerSatisfechos() = pedidos.filter({p=>self.noPuedeSatisfacerA(p)})
+  
+  method noPuedeSatisfacerA(unPedido) = !rodados.any({r=>r.puedeSatisfacer(unPedido)})
+  method todosSonCompatiblesCon(unColor) = pedidos.all({p=>!p.coloresIncompatibles().contains(unColor)})
+  method relajarATodos() = pedidos.forEach({p=>p.relajar()})
+  method coloresIncompatibles() {
+    pedidos.forEach({p=>coloresIncompatibles.add(p.coloresIncompatibles()) })
+    return coloresIncompatibles
+  }
+  method colores() = rodados.map({r=>r.color()})
+  
  }
 object azul {
 
